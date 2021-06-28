@@ -1,0 +1,141 @@
+{
+  "provider": {
+    "name": "book-catalog"
+  },
+  "consumer": {
+    "name": "library-client"
+  },
+  "interactions": [
+    {
+      "description": "get all books",
+      "request": {
+        "method": "GET",
+        "path": "/book-catalog/books"
+      },
+      "response": {
+        "status": 200,
+        "headers": {
+          "Content-Type": "application/json"
+        },
+        "body": [
+          {
+            "isbn": "101201",
+            "title": "Book1",
+            "authors": "Author1;Author2"
+          },
+          {
+            "isbn": "101201",
+            "title": "Book1",
+            "authors": "Author1;Author2"
+          },
+          {
+            "isbn": "101201",
+            "title": "Book1",
+            "authors": "Author1;Author2"
+          }
+        ],
+        "matchingRules": {
+          "body": {
+            "$": {
+              "matchers": [
+                {
+                  "match": "type",
+                  "min": 0
+                }
+              ],
+              "combine": "AND"
+            },
+            "$[*].isbn": {
+              "matchers": [
+                {
+                  "match": "type"
+                }
+              ],
+              "combine": "AND"
+            },
+            "$[*].title": {
+              "matchers": [
+                {
+                  "match": "type"
+                }
+              ],
+              "combine": "AND"
+            },
+            "$[*].authors": {
+              "matchers": [
+                {
+                  "match": "type"
+                }
+              ],
+              "combine": "AND"
+            }
+          }
+        }
+      },
+      "providerStates": [
+        {
+          "name": "books exist"
+        }
+      ]
+    },
+    {
+      "description": "get one book",
+      "request": {
+        "method": "GET",
+        "path": "/book-catalog/book/101201"
+      },
+      "response": {
+        "status": 200,
+        "headers": {
+          "Content-Type": "application/json"
+        },
+        "body": {
+          "isbn": "101201",
+          "title": "Book1",
+          "authors": "Author1;Author2"
+        },
+        "matchingRules": {
+          "body": {
+            "$.isbn": {
+              "matchers": [
+                {
+                  "match": "type"
+                }
+              ],
+              "combine": "AND"
+            },
+            "$.title": {
+              "matchers": [
+                {
+                  "match": "type"
+                }
+              ],
+              "combine": "AND"
+            },
+            "$.authors": {
+              "matchers": [
+                {
+                  "match": "type"
+                }
+              ],
+              "combine": "AND"
+            }
+          }
+        }
+      },
+      "providerStates": [
+        {
+          "name": "books with ISBN 101201 available"
+        }
+      ]
+    }
+  ],
+  "metadata": {
+    "pactSpecification": {
+      "version": "3.0.0"
+    },
+    "pact-jvm": {
+      "version": "4.1.6"
+    }
+  }
+}
