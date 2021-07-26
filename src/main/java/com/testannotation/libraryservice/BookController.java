@@ -15,14 +15,13 @@ public class BookController {
     @Autowired
     private BookRepository bookRepository;
 
-
     @GetMapping("/book-catalog/books")
     public List<Book> getAllBooks() {
         return bookRepository.getAll();
     }
 
     @GetMapping("/book-catalog/book/{id}")
-    public ResponseEntity<Book> getProductById(@PathVariable("id") String isbn) {
+    public ResponseEntity<Book> getBookByISBN(@PathVariable("id") String isbn) {
         Optional<Book> book = bookRepository.getById(isbn);
         return ResponseEntity.of(book);
     }
