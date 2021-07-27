@@ -14,7 +14,7 @@
 	<name>book-catalog</name>
 	<description>Small Book Service</description>
 	<properties>
-		<java.version>11</java.version>
+		<java.version>10</java.version>
 	</properties>
 	<dependencies>
 		<dependency>
