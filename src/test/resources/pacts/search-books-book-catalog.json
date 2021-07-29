@@ -1,0 +1,219 @@
+{
+  "provider": {
+    "name": "book-catalog"
+  },
+  "consumer": {
+    "name": "search-books"
+  },
+  "interactions": [
+    {
+      "description": "get one book",
+      "request": {
+        "method": "GET",
+        "path": "/book-catalog/book/101201"
+      },
+      "response": {
+        "status": 200,
+        "headers": {
+          "Content-Type": "application/json"
+        },
+        "body": {
+          "isbn": "101201",
+          "genre": "Fiction",
+          "publisher": "HarperCollins",
+          "title": "The Alchemist",
+          "authors": [
+            "Paolo Coelho",
+            "Paolo Coelho"
+          ]
+        },
+        "matchingRules": {
+          "body": {
+            "$.isbn": {
+              "matchers": [
+                {
+                  "match": "type"
+                }
+              ],
+              "combine": "AND"
+            },
+            "$.title": {
+              "matchers": [
+                {
+                  "match": "type"
+                }
+              ],
+              "combine": "AND"
+            },
+            "$.authors": {
+              "matchers": [
+                {
+                  "match": "type",
+                  "min": 1
+                }
+              ],
+              "combine": "AND"
+            },
+            "$.authors[*]": {
+              "matchers": [
+                {
+                  "match": "type"
+                }
+              ],
+              "combine": "AND"
+            },
+            "$.publisher": {
+              "matchers": [
+                {
+                  "match": "type"
+                }
+              ],
+              "combine": "AND"
+            },
+            "$.genre": {
+              "matchers": [
+                {
+                  "match": "type"
+                }
+              ],
+              "combine": "AND"
+            }
+          }
+        }
+      },
+      "providerStates": [
+        {
+          "name": "book with ISBN 101201 exists"
+        }
+      ]
+    },
+    {
+      "description": "get all books",
+      "request": {
+        "method": "GET",
+        "path": "/book-catalog/books"
+      },
+      "response": {
+        "status": 200,
+        "headers": {
+          "Content-Type": "application/json"
+        },
+        "body": [
+          {
+            "isbn": "101201",
+            "genre": "Fiction",
+            "publisher": "string",
+            "title": "The Alchemist",
+            "authors": [
+              "Paolo Coelho",
+              "Paolo Coelho"
+            ]
+          },
+          {
+            "isbn": "101201",
+            "genre": "Fiction",
+            "publisher": "string",
+            "title": "The Alchemist",
+            "authors": [
+              "Paolo Coelho",
+              "Paolo Coelho"
+            ]
+          },
+          {
+            "isbn": "101201",
+            "genre": "Fiction",
+            "publisher": "string",
+            "title": "The Alchemist",
+            "authors": [
+              "Paolo Coelho",
+              "Paolo Coelho"
+            ]
+          }
+        ],
+        "matchingRules": {
+          "body": {
+            "$": {
+              "matchers": [
+                {
+                  "match": "type",
+                  "min": 0
+                }
+              ],
+              "combine": "AND"
+            },
+            "$[*].isbn": {
+              "matchers": [
+                {
+                  "match": "type"
+                }
+              ],
+              "combine": "AND"
+            },
+            "$[*].title": {
+              "matchers": [
+                {
+                  "match": "type"
+                }
+              ],
+              "combine": "AND"
+            },
+            "$[*].authors": {
+              "matchers": [
+                {
+                  "match": "type",
+                  "min": 1
+                }
+              ],
+              "combine": "AND"
+            },
+            "$[*].authors[*]": {
+              "matchers": [
+                {
+                  "match": "type"
+                }
+              ],
+              "combine": "AND"
+            },
+            "$[*].publisher": {
+              "matchers": [
+                {
+                  "match": "type"
+                }
+              ],
+              "combine": "AND"
+            },
+            "$[*].genre": {
+              "matchers": [
+                {
+                  "match": "type"
+                }
+              ],
+              "combine": "AND"
+            }
+          }
+        },
+        "generators": {
+          "body": {
+            "$[*].publisher": {
+              "type": "RandomString",
+              "size": 20
+            }
+          }
+        }
+      },
+      "providerStates": [
+        {
+          "name": "books exist"
+        }
+      ]
+    }
+  ],
+  "metadata": {
+    "pactSpecification": {
+      "version": "3.0.0"
+    },
+    "pact-jvm": {
+      "version": "4.1.6"
+    }
+  }
+}
